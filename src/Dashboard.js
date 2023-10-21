@@ -1,37 +1,18 @@
 import {Monitor} from "./Monitor";
 import React, {useState} from "react";
-import {Box, Flex, Grid, GridItem, HStack, Select, SimpleGrid} from "@chakra-ui/react";
+import {Grid, GridItem, SimpleGrid} from "@chakra-ui/react";
 import {EditPerson} from "./EditPerson";
-import {Person} from "./Person";
+import {DashboardHeader} from "./DashboardHeader";
+import {computeLayout, LAYOUT_ORIENTATION} from "./services/Layout";
+import {People} from "./services/People";
 
-const ORIENTATION_VERTICAL = 'VERTICAL';
-const ORIENTATION_HORIZONTAL = 'HORIZONTAL';
-const ORIENTATION_GRID = 'GRID';
-
-export function Dashboard({numberOfPeople}) {
-    const [people, setPeople] = useState(Array(numberOfPeople).fill(null).map((n, index) => new Person(index)));
+export function Dashboard(props) {
+    const [people, setPeople] = useState(People.create(props.numberOfPeople));
     const [editedPerson, setEditedPerson] = useState(null);
-    const [orientation, setOrientation] = useState(ORIENTATION_GRID)
+    const [orientation, setOrientation] = useState(LAYOUT_ORIENTATION.GRID);
 
-    const [numberOfRows, numberOfCols] = computeLayout(numberOfPeople, orientation);
+    const [numberOfRows, numberOfCols] = computeLayout(people.length, orientation);
     const isEditingPerson = editedPerson !== null;
-
-    function computeLayout(numberOfPeople, orientation) {
-        let numberOfRows, numberOfCols;
-
-        if (orientation === ORIENTATION_VERTICAL) {
-            numberOfRows = numberOfPeople;
-            numberOfCols = 1;
-        } else if (orientation === ORIENTATION_HORIZONTAL) {
-            numberOfRows = 1;
-            numberOfCols = numberOfPeople;
-        } else {
-            numberOfRows = Math.round(Math.sqrt(numberOfPeople));
-            numberOfCols = Math.ceil(numberOfPeople / numberOfRows);
-        }
-
-        return [numberOfRows, numberOfCols];
-    }
 
     function editPerson(person) {
         return () => {
@@ -52,26 +33,24 @@ export function Dashboard({numberOfPeople}) {
         setEditedPerson(null);
     }
 
-    function onOrientationChange(event) {
-        event.preventDefault();
 
-        setOrientation(event.target.value);
+    function onNumberOfPeopleChange(value) {
+        if (people.length < value) {
+            const newPeople = People.create(value - people.length, people.length);
+
+            setPeople([...people, ...newPeople]);
+        } else if (people.length > value) {
+            setPeople([...people.slice(0, value)]);
+        }
     }
 
     return (
         <>
-            <Grid gridTemplateRows={'60px 1fr'} h={'100vh'}>
+            <Grid gridTemplateRows={'min-content 1fr'} h={'100vh'}>
                 <GridItem bg={'gray.50'} alignSelf={'center'}>
-                    <Flex paddingX={10} justify={'stretch'}>
-                        <HStack>
-                            <Box color={'gray.600'}>Układ&nbsp;Monitorów</Box>
-                            <Select value={orientation} onChange={onOrientationChange} variant={'outline'}>
-                                <option value={ORIENTATION_VERTICAL}>Pionowy</option>
-                                <option value={ORIENTATION_HORIZONTAL}>Poziomy</option>
-                                <option value={ORIENTATION_GRID}>Siatka</option>
-                            </Select>
-                        </HStack>
-                    </Flex>
+                    <DashboardHeader orientation={orientation}
+                                     onOrientationChange={setOrientation} numberOfPeople={people.length}
+                                     onNumberOfPeopleChange={onNumberOfPeopleChange}></DashboardHeader>
                 </GridItem>
                 <GridItem>
                     <SimpleGrid columns={numberOfCols} rows={numberOfRows} gap={0.5} h={'100%'}>
