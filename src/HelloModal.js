@@ -1,13 +1,14 @@
 import {
     Box,
     Button,
-    Center, Image,
+    Image,
     Modal,
     ModalBody,
     ModalContent,
     ModalFooter,
     ModalHeader,
-    ModalOverlay, Stack,
+    ModalOverlay,
+    Stack,
     Text
 } from "@chakra-ui/react";
 import logo from './hello-logo.svg';

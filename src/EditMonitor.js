@@ -13,10 +13,10 @@ import {
 } from "@chakra-ui/react";
 import {useState} from "react";
 
-export function EditPerson({isOpen, onSubmit, person}) {
-    const [label, setLabel] = useState(person.label || '');
-    const [url, setUrl] = useState(person.url || '');
-    const [withClock, setWithClock] = useState(person.withClock);
+export function EditMonitor({monitor, onSubmit}) {
+    const [label, setLabel] = useState(monitor.label || '');
+    const [url, setUrl] = useState(monitor.url || '');
+    const [withClock, setWithClock] = useState(monitor.withClock);
 
     function onLabelInput(event) {
         setLabel(event.target.value);
@@ -31,7 +31,7 @@ export function EditPerson({isOpen, onSubmit, person}) {
     }
 
     function submit() {
-        const newPerson = {...person, label, url, withClock};
+        const newPerson = {...monitor, label, url, withClock};
 
         onSubmit(newPerson);
     }

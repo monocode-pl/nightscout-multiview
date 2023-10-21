@@ -14,7 +14,7 @@ import React, {useState} from "react";
 import {LAYOUT_ORIENTATION} from "./services/Layout";
 
 export function DashboardHeader(props) {
-    const [numberOfPeople, setNumberOfPeople] = useState(props.numberOfPeople);
+    const [numberOfMonitors, setNumberOfMonitors] = useState(props.numberOfMonitors);
 
     function onOrientationChange(event) {
         event.preventDefault();
@@ -22,16 +22,16 @@ export function DashboardHeader(props) {
         props.onOrientationChange(event.target.value);
     }
 
-    function onNumberOfPeopleChange(strValue, numValue) {
-        setNumberOfPeople(strValue);
+    function onNumberOfMonitorsChange(strValue, numValue) {
+        setNumberOfMonitors(strValue);
 
         if (!isNaN(numValue)) {
-            props.onNumberOfPeopleChange(Math.min(numValue, 30));
+            props.onNumberOfMonitorsChange(Math.min(numValue, 30));
         }
     }
 
-    function onNumberOfPeopleBlur() {
-        setNumberOfPeople(props.numberOfPeople);
+    function onNumberOfMonitorsBlur() {
+        setNumberOfMonitors(props.numberOfMonitors);
     }
 
     return (
@@ -50,12 +50,12 @@ export function DashboardHeader(props) {
                 <Show above={'md'}>
                     <FormLabel htmlFor='orientation' m={0}>Liczba Monitorów</FormLabel>
                 </Show>
-                <NumberInput value={numberOfPeople}
+                <NumberInput value={numberOfMonitors}
                              max={30}
                              min={1}
                              inputMode={'numeric'}
-                             onChange={onNumberOfPeopleChange}
-                             onBlur={onNumberOfPeopleBlur}
+                             onChange={onNumberOfMonitorsChange}
+                             onBlur={onNumberOfMonitorsBlur}
                              maxW={'80px'}>
                     <NumberInputField></NumberInputField>
                     <NumberInputStepper>

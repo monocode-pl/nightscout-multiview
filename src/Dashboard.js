@@ -1,59 +1,52 @@
 import {Monitor} from "./Monitor";
 import React, {useState} from "react";
 import {Grid, GridItem, SimpleGrid} from "@chakra-ui/react";
-import {EditPerson} from "./EditPerson";
+import {EditMonitor} from "./EditMonitor";
 import {DashboardHeader} from "./DashboardHeader";
 import {computeLayout, LAYOUT_ORIENTATION} from "./services/Layout";
-import {People} from "./services/People";
+import {Monitors} from "./services/Monitors";
 import {FileBuilder} from "./services/FileBuilder";
 import {FileDownloader} from "./services/FileDownloader";
 
 export function Dashboard(props) {
-    const [people, setPeople] = useState(People.create(props.numberOfPeople));
-    const [editedPerson, setEditedPerson] = useState(null);
+    const [monitors, setMonitors] = useState(Monitors.create(props.numberOfMonitors));
+    const [editedMonitor, setEditedMonitor] = useState(null);
     const [orientation, setOrientation] = useState(LAYOUT_ORIENTATION.GRID);
 
-    const [numberOfRows, numberOfCols] = computeLayout(people.length, orientation);
-    const isEditingPerson = editedPerson !== null;
+    const [numberOfRows, numberOfCols] = computeLayout(monitors.length, orientation);
+    const isEditingMonitor = editedMonitor !== null;
 
-    function editPerson(person) {
+    function editMonitor(monitor) {
         return () => {
-            setEditedPerson(person);
+            setEditedMonitor(monitor);
         }
     }
 
-    function updatePerson(newPerson) {
-        setPeople(people.map(person => {
-            if (person.id === newPerson.id) {
-                person.label = newPerson.label;
-                person.url = newPerson.url;
-                person.withClock = newPerson.withClock;
+    function updateMonitor(newMonitor) {
+        setMonitors(monitors.map(monitor => {
+            if (monitor.id === newMonitor.id) {
+                monitor.label = newMonitor.label;
+                monitor.url = newMonitor.url;
+                monitor.withClock = newMonitor.withClock;
             }
 
-            return person;
+            return monitor;
         }));
-        setEditedPerson(null);
+        setEditedMonitor(null);
     }
 
 
-    function onNumberOfPeopleChange(value) {
-        if (people.length < value) {
-            const newPeople = People.create(value - people.length, people.length);
+    function onNumberOfMonitorsChange(value) {
+        if (monitors.length < value) {
+            const newMonitors = Monitors.create(value - monitors.length, monitors.length);
 
-            setPeople([...people, ...newPeople]);
-        } else if (people.length > value) {
-            setPeople([...people.slice(0, value)]);
+            setMonitors([...monitors, ...newMonitors]);
+        } else if (monitors.length > value) {
+            setMonitors([...monitors.slice(0, value)]);
         }
     }
 
     function download() {
-        const monitors = people.map(p => {
-            return {
-                label: p.label,
-                url: p.frameUrl
-            }
-        });
-
         const file = new FileBuilder()
             .monitors(monitors)
             .rows(numberOfRows)
@@ -69,19 +62,22 @@ export function Dashboard(props) {
                 <GridItem bg={'gray.50'} alignSelf={'center'}>
                     <DashboardHeader orientation={orientation}
                                      onOrientationChange={setOrientation}
-                                     numberOfPeople={people.length}
-                                     onNumberOfPeopleChange={onNumberOfPeopleChange}
+                                     numberOfMonitors={monitors.length}
+                                     onNumberOfMonitorsChange={onNumberOfMonitorsChange}
                                      onDownload={download}></DashboardHeader>
                 </GridItem>
                 <GridItem>
-                    <SimpleGrid columns={numberOfCols} rows={numberOfRows} gap={0.5} h={'100%'}>
+                    <SimpleGrid columns={numberOfCols}
+                                rows={numberOfRows}
+                                gap={0.5}
+                                h={'100%'}>
                         {
-                            people.map(person => {
+                            monitors.map(monitor => {
                                 return (
-                                    <Monitor label={person.label}
-                                             url={person.frameUrl}
-                                             onEdit={editPerson(person)}
-                                             key={person.id}></Monitor>
+                                    <Monitor label={monitor.label}
+                                             url={monitor.frameUrl}
+                                             onEdit={editMonitor(monitor)}
+                                             key={monitor.id}></Monitor>
                                 )
                             })
                         }
@@ -89,7 +85,7 @@ export function Dashboard(props) {
                 </GridItem>
             </Grid>
             {
-                isEditingPerson ? <EditPerson person={editedPerson} onSubmit={updatePerson}></EditPerson> : null
+                isEditingMonitor ? <EditMonitor monitor={editedMonitor} onSubmit={updateMonitor}></EditMonitor> : null
             }
         </>
     )

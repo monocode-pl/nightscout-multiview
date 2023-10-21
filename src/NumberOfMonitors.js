@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import {useState} from "react";
 
-export function NumberOfPeopleModal({numberOfPeople, onSubmit}) {
-    const [value, setValue] = useState(numberOfPeople);
+export function NumberOfMonitors({numberOfMonitors, onSubmit}) {
+    const [value, setValue] = useState(numberOfMonitors);
     const valueInvalid = isValueValid(value);
 
     function isValueValid(value) {

@@ -24,7 +24,12 @@ export class FileBuilder {
 
     build(filename) {
         const context = {
-            monitors: this._monitors,
+            monitors: this._monitors.map(monitor => {
+                return {
+                    label: monitor.label,
+                    url: monitor.frameUrl
+                }
+            }),
             rows: this._rows,
             cols: this._cols
         }
