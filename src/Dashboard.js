@@ -5,6 +5,8 @@ import {EditPerson} from "./EditPerson";
 import {DashboardHeader} from "./DashboardHeader";
 import {computeLayout, LAYOUT_ORIENTATION} from "./services/Layout";
 import {People} from "./services/People";
+import {FileBuilder} from "./services/FileBuilder";
+import {FileDownloader} from "./services/FileDownloader";
 
 export function Dashboard(props) {
     const [people, setPeople] = useState(People.create(props.numberOfPeople));
@@ -44,13 +46,32 @@ export function Dashboard(props) {
         }
     }
 
+    function download() {
+        const monitors = people.map(p => {
+            return {
+                label: p.label,
+                url: p.frameUrl
+            }
+        });
+
+        const file = new FileBuilder()
+            .monitors(monitors)
+            .rows(numberOfRows)
+            .cols(numberOfCols)
+            .build('nightscout-multiview.html');
+
+        FileDownloader.download(file)
+    }
+
     return (
         <>
             <Grid gridTemplateRows={'min-content 1fr'} h={'100vh'}>
                 <GridItem bg={'gray.50'} alignSelf={'center'}>
                     <DashboardHeader orientation={orientation}
-                                     onOrientationChange={setOrientation} numberOfPeople={people.length}
-                                     onNumberOfPeopleChange={onNumberOfPeopleChange}></DashboardHeader>
+                                     onOrientationChange={setOrientation}
+                                     numberOfPeople={people.length}
+                                     onNumberOfPeopleChange={onNumberOfPeopleChange}
+                                     onDownload={download}></DashboardHeader>
                 </GridItem>
                 <GridItem>
                     <SimpleGrid columns={numberOfCols} rows={numberOfRows} gap={0.5} h={'100%'}>
