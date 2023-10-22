@@ -1,16 +1,4 @@
-import {
-    Box,
-    Button,
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    Container,
-    Heading,
-    Image,
-    Stack,
-    Text
-} from "@chakra-ui/react";
+import {Box, Button, Card, CardBody, CardFooter, Container, Heading, Image, Link, Text} from "@chakra-ui/react";
 import logo from './hello-logo.svg';
 import {useTranslation} from "react-i18next";
 import {LanguageSelector} from "./LanguageSelector";
@@ -53,6 +41,16 @@ export function Welcome({onClose}) {
                         </Button>
                     </CardFooter>
                 </Card>
+                <Box fontSize='xs'
+                     color='gray.500'
+                     textAlign='center' mt='8'>
+                    <Text mb={{base: 2, sm: 0}}>
+                        {t('Created by MONOCODE Paweł Smoleński for Technologie diabetyka under MIT license.')}
+                    </Text>
+                    <Text>
+                        {t('You want to help translating this page? Get in touch with us: ')} <Link href={"mailto://admin@techdiab.pl"}>admin@techdiab.pl</Link>
+                    </Text>
+                </Box>
             </Container>
         </>
 
