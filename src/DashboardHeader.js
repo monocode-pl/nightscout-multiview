@@ -2,7 +2,7 @@ import {
     Button,
     FormControl,
     FormLabel,
-    HStack,
+    HStack, Image,
     NumberDecrementStepper,
     NumberIncrementStepper,
     NumberInput,
@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React, {useState} from "react";
 import {LAYOUT_ORIENTATION} from "./services/Layout";
+import simpleLogo from './logo-simple.svg';
 
 export function DashboardHeader(props) {
     const [numberOfMonitors, setNumberOfMonitors] = useState(props.numberOfMonitors);
@@ -36,8 +37,11 @@ export function DashboardHeader(props) {
 
     return (
         <HStack paddingX={5} justify={'flex-start'} gap={{base: 5, md: 10}} paddingY={2} bg={'gray.50'} color={'gray.600'}>
+            <Show breakpoint={'(min-width: 700px)'}>
+                <Image src={simpleLogo} maxH='40px' />
+            </Show>
             <FormControl display='flex' alignItems={'center'} gap={3} maxW={'300px'}>
-                <Show above={'md'}>
+                <Show breakpoint={'(min-width: 650px)'}>
                     <FormLabel htmlFor='orientation' m={0}>Układ&nbsp;Monitorów</FormLabel>
                 </Show>
                 <Select value={props.orientation} onChange={onOrientationChange} variant={'outline'}>
@@ -47,8 +51,8 @@ export function DashboardHeader(props) {
                 </Select>
             </FormControl>
             <FormControl display='flex' alignItems={'center'} gap={3}>
-                <Show above={'md'}>
-                    <FormLabel htmlFor='orientation' m={0}>Liczba Monitorów</FormLabel>
+                <Show breakpoint={'(min-width: 650px)'}>
+                    <FormLabel htmlFor='orientation' m={0}>Liczba&nbsp;Monitorów</FormLabel>
                 </Show>
                 <NumberInput value={numberOfMonitors}
                              max={30}
