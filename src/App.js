@@ -1,11 +1,12 @@
 import {ChakraProvider} from '@chakra-ui/react'
-import {HelloModal} from "./HelloModal";
+import {Welcome} from "./Welcome";
 import {NumberOfMonitors} from "./NumberOfMonitors";
 import {Dashboard} from "./Dashboard";
 import {useState} from "react";
+import {theme} from "./Theme";
 
 function App() {
-    const [view, setView] = useState('hello');
+    const [view, setView] = useState('welcome');
     const [numberOfMonitors, setNumberOfMonitors] = useState(4);
 
     function onHelloClose() {
@@ -20,8 +21,8 @@ function App() {
     let content = null;
 
     switch (view) {
-        case 'hello':
-            content = <HelloModal onClose={onHelloClose}></HelloModal>
+        case 'welcome':
+            content = <Welcome onClose={onHelloClose}></Welcome>
             break;
         case 'numberOfMonitors':
             content = <NumberOfMonitors numberOfMonitors={numberOfMonitors} onSubmit={onNumberOfMonitorsSubmit}></NumberOfMonitors>
@@ -32,7 +33,7 @@ function App() {
     }
 
   return (
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
           {content}
       </ChakraProvider>
   );
