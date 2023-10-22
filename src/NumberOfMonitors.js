@@ -10,10 +10,12 @@ import {
     NumberInputField
 } from "@chakra-ui/react";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 export function NumberOfMonitors({numberOfMonitors, onSubmit}) {
     const [value, setValue] = useState(numberOfMonitors);
     const valueInvalid = isValueValid(value);
+    const {t} = useTranslation();
 
     function isValueValid(value) {
         value = parseInt(value, 10);
@@ -41,7 +43,9 @@ export function NumberOfMonitors({numberOfMonitors, onSubmit}) {
         <Modal isOpen={true} onClose={onClose} isCentered={true}>
             <ModalOverlay/>
             <ModalContent>
-                <ModalHeader>Ile osób chcesz monitorować?</ModalHeader>
+                <ModalHeader>
+                    {t('How many people you want to monitor?')}
+                </ModalHeader>
                 <ModalBody>
                     <FormControl isInvalid={valueInvalid}>
                         <NumberInput value={value} min={1} max={50} size='lg'>
@@ -52,7 +56,9 @@ export function NumberOfMonitors({numberOfMonitors, onSubmit}) {
                 </ModalBody>
 
                 <ModalFooter>
-                    <Button colorScheme={'teal'} size={'lg'} onClick={onBtbClick} isDisabled={valueInvalid}>Dalej</Button>
+                    <Button colorScheme={'teal'} size={'lg'} onClick={onBtbClick} isDisabled={valueInvalid}>
+                        {t('Next')}
+                    </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

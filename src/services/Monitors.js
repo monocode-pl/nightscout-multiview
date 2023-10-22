@@ -1,7 +1,9 @@
+import i18next from "i18next";
+
 export class Monitor {
     constructor(id) {
         this.id = id;
-        this.label = `Osoba ${id + 1}`;
+        this.label = i18next.t('Person {{id}}', {id: id + 1});
         this.url = null;
         this.withClock = false;
     }

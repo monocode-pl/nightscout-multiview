@@ -1,0 +1,26 @@
+{
+  "Welcome to Nightscout Multivew Generator": "Welcome to Nightscout\u00A0Multivew Generator",
+  "Using the Generator you can easily create a panel allowing for simultaneous monitoring of multiple people.": "Using the Generator you can easily create a panel allowing for simultaneous monitoring of multiple persons.",
+  "Specify how many people you want to monitor, and provide a Nightscout page address for each person.": "Specify how many people you want to monitor, and provide a Nightscout page address for each person.",
+  "The Generator will create a file with the panel which you can download on your computer.": "The Generator will create a file with the panel which you can download on your computer.",
+  "Open the downloaded file in any internet browser.": "Open the downloaded file in any internet browser.",
+  "Open the downloaded file in any internet browser.": "Open the downloaded file in any internet browser.",
+  "Let's begin": "Let's begin",
+  "How many people you want to monitor?": "How many people you want to monitor?",
+  "Next": "Next",
+  "Monitors Layout": "Monitors\u00A0Layout",
+  "Monitors Count": "Monitors Count",
+  "Horizontal": "Horizontal",
+  "Vertical": "Vertical",
+  "Grid": "Grid",
+  "Download": "Download",
+  "Person": "Person",
+  "Edit": "Edit",
+  "Provide person's data": "Provide person's data",
+  "Name": "Name",
+  "Nightscout page address": "Nightscout page address",
+  "Clock": "Clock",
+  "Save": "Save",
+  "Person {{id}}": "Person {{id}}"
+
+}
