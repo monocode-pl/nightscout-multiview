@@ -31,6 +31,7 @@ export default function template({monitors, rows, cols, labelFontSize = '20px'})
             .monitor {
                 position: relative;
                 min-height: 0;
+                max-height: 100%;
             }
     
             .monitor-label {
