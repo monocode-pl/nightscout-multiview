@@ -28,6 +28,6 @@ jobs:
         server: ${{secrets.DEPLOY_FTP_SERVER}}
         username: ${{secrets.DEPLOY_FTP_USER}}
         password: ${{secrets.DEPLOY_FTP_PASSWORD}}
-        local-dir: ./build
+        local-dir: ./build/
         server-dir: ${{vars.DEPLOY_FTP_SERVER_DIR}}
         dry-run: ${{inputs.dryRun}}
