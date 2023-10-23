@@ -9,6 +9,7 @@ jobs:
     uses: ./.github/workflows/build.yml
   deploy:
     name: Deploy
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
     - name: Upload files
