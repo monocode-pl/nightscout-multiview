@@ -1,0 +1,17 @@
+on: 
+  - workflow_dispatch
+name: Deploy
+jobs:
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yml
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{secrets.DEPLOY_FTP_SERVER}}
+        username: ${{secrets.DEPLOY_FTP_USER}}
+        password: ${{secrets.DEPLOY_FTP_PASSWORD}}
