@@ -1,8 +1,16 @@
 name: Deploy
 
 on: 
-  - workflow_dispatch
-
+  workflow_dispatch:
+    inputs:
+     environment:
+      type: environment
+      description: Select the environment
+     dryRun:
+      type: boolean
+      description: Dry run
+    
+    
 jobs:
   build:
     name: Build
@@ -10,6 +18,8 @@ jobs:
   deploy:
     name: Deploy
     needs: [build]
+    environment:
+      name: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
     - name: Upload files
@@ -18,3 +28,6 @@ jobs:
         server: ${{secrets.DEPLOY_FTP_SERVER}}
         username: ${{secrets.DEPLOY_FTP_USER}}
         password: ${{secrets.DEPLOY_FTP_PASSWORD}}
+        local-dir: ./build
+        server-dir: ${{vars.DEPLOY_FTP_SERVER_DIR}}
+        dry-run: ${{inputs.dryRun}}
