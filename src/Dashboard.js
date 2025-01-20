@@ -27,6 +27,7 @@ export function Dashboard(props) {
             if (monitor.id === newMonitor.id) {
                 monitor.label = newMonitor.label;
                 monitor.url = newMonitor.url;
+                monitor.token = newMonitor.token;
                 monitor.withClock = newMonitor.withClock;
             }
 

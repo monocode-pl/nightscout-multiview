@@ -18,6 +18,7 @@ export function EditMonitor({monitor, onSubmit}) {
     const [label, setLabel] = useState(monitor.label || '');
     const [url, setUrl] = useState(monitor.url || '');
     const [withClock, setWithClock] = useState(monitor.withClock);
+    const [token, setToken] = useState(monitor.token || '');
     const {t} = useTranslation();
     function onLabelInput(event) {
         setLabel(event.target.value);
@@ -31,8 +32,12 @@ export function EditMonitor({monitor, onSubmit}) {
         setWithClock(event.target.checked);
     }
 
+    function onTokenChange(event) {
+        setToken(event.target.value);
+    }
+
     function submit() {
-        const newPerson = {...monitor, label, url, withClock};
+        const newPerson = {...monitor, label, url, withClock, token};
 
         onSubmit(newPerson);
     }
@@ -63,6 +68,10 @@ export function EditMonitor({monitor, onSubmit}) {
                         <FormLabel>{t('Nightscout page address')}</FormLabel>
                         <Input type='text' value={url} onInput={onUrlInput} />
                         {urlInvalid && <FormErrorMessage>Niepoprawny adres</FormErrorMessage>}
+                    </FormControl>
+                    <FormControl mb={5}>
+                        <FormLabel>{t('Token')}</FormLabel>
+                        <Input type='text' value={token} onInput={onTokenChange} />
                     </FormControl>
                     <FormControl>
                         <FormLabel htmlFor='withClockSwitch'>{t('Clock')}</FormLabel>

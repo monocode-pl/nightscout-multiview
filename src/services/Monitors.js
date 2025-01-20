@@ -6,17 +6,30 @@ export class Monitor {
         this.label = i18next.t('Person {{id}}', {id: id + 1});
         this.url = null;
         this.withClock = false;
+        this.token = null;
     }
     get frameUrl() {
         if (!this.url) {
             return this.url;
         }
 
-        if (!this.withClock) {
-            return this.url;
+        const baseUrl = new URL(this.url);
+        let frameUrl = baseUrl;
+
+        if (this.withClock) {
+            frameUrl = new URL('/clock/cy10-sg50-nl-ar20-dt20', baseUrl);
+
+            // Creating a relative url wipes out all search params. We need to restore them.
+            baseUrl.searchParams.entries().forEach(([key, val]) => {
+                frameUrl.searchParams.append(key, val);
+            });
         }
 
-        return new URL('/clock/cy10-sg50-nl-ar20-dt20', this.url).toString();
+        if (this.token) {
+            frameUrl.searchParams.set('token', this.token);
+        }
+
+        return frameUrl.toString();
     }
 }
 
