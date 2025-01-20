@@ -20,7 +20,7 @@ export class Monitor {
             frameUrl = new URL('/clock/cy10-sg50-nl-ar20-dt20', baseUrl);
 
             // Creating a relative url wipes out all search params. We need to restore them.
-            baseUrl.searchParams.entries().forEach(([key, val]) => {
+            [...baseUrl.searchParams.entries()].forEach(([key, val]) => {
                 frameUrl.searchParams.append(key, val);
             });
         }
