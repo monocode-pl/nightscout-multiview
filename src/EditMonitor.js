@@ -28,6 +28,24 @@ export function EditMonitor({monitor, onSubmit}) {
         setUrl(event.target.value);
     }
 
+    function onUrlPaste(event) {
+        try {
+            const pastedText = event.clipboardData.getData("text/plain");
+            const pastedUrl = new URL(pastedText);
+
+            if (pastedUrl.searchParams.has("token")) {
+                setToken(pastedUrl.searchParams.get("token"));
+                pastedUrl.searchParams.delete("token");
+            }
+
+            setUrl(pastedUrl.toString());
+
+            event.preventDefault();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     function onWithClockChange(event) {
         setWithClock(event.target.checked);
     }
@@ -66,7 +84,7 @@ export function EditMonitor({monitor, onSubmit}) {
                     </FormControl>
                     <FormControl mb={5} isInvalid={urlInvalid}>
                         <FormLabel>{t('Nightscout page address')}</FormLabel>
-                        <Input type='text' value={url} onInput={onUrlInput} />
+                        <Input type='text' value={url} onInput={onUrlInput} onPaste={onUrlPaste}/>
                         {urlInvalid && <FormErrorMessage>Niepoprawny adres</FormErrorMessage>}
                     </FormControl>
                     <FormControl mb={5}>
